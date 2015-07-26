@@ -43,19 +43,9 @@ static NSOpenGLContext *gl_context_create(void)
 
 	NSOpenGLPixelFormatAttribute attributes[40];
 
-	ADD_ATTR(NSOpenGLPFAClosestPolicy);
+	ADD_ATTR(NSOpenGLPFAAccelerated);
+	ADD_ATTR(NSOpenGLPFADoubleBuffer);
 	ADD_ATTR2(NSOpenGLPFAOpenGLProfile, NSOpenGLProfileVersion3_2Core);
-
-	int color_bits = 0;//get_color_format_bits(info->format);
-	if(color_bits == 0) color_bits = 24;
-	else if(color_bits < 15) color_bits = 15;
-
-	ADD_ATTR2(NSOpenGLPFAColorSize, color_bits);
-
-	ADD_ATTR2(NSOpenGLPFAAlphaSize, 8);
-
-	ADD_ATTR2(NSOpenGLPFADepthSize, 16);
-
 	ADD_ATTR(0);
 
 #undef ADD_ATTR2
@@ -75,6 +65,8 @@ static NSOpenGLContext *gl_context_create(void)
 		blog(LOG_ERROR, "Failed to create context");
 		return NULL;
 	}
+
+	[context clearDrawable];
 
 	return context;
 }
@@ -177,7 +169,7 @@ void device_load_swapchain(gs_device_t *device, gs_swapchain_t *swap)
 	if (swap) {
 		[device->plat->context setView:swap->wi->view];
 	} else {
-		[device->plat->context setView:nil];
+		[device->plat->context clearDrawable];
 	}
 }
 
