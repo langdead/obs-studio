@@ -43,7 +43,6 @@ static NSOpenGLContext *gl_context_create(void)
 
 	NSOpenGLPixelFormatAttribute attributes[40];
 
-	ADD_ATTR(NSOpenGLPFAAccelerated);
 	ADD_ATTR(NSOpenGLPFADoubleBuffer);
 	ADD_ATTR2(NSOpenGLPFAOpenGLProfile, NSOpenGLProfileVersion3_2Core);
 	ADD_ATTR(0);
